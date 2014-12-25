@@ -1,0 +1,7 @@
+<div class="file-picker__dropzone">
+  {{yield}}
+</div>
+{{#if preview}}
+  <div class="file-picker__preview"></div>
+{{/if}}
+{{input type="file" value=file accept=accept multiple=multiple class="file-picker__input"}}
