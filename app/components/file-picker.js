@@ -3,7 +3,10 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['file-picker'],
   classNameBindings: ['multiple:multiple:single'],
+  accept: '*',
   multiple: false,
+  preview: true,
+  dropzone: true,
 
   /**
    * When the component got inserted
@@ -42,11 +45,11 @@ export default Ember.Component.extend({
       this.updatePreview(files);
     }
     
-    // if (this.get('multiple')) {
-    //   this.sendAction('filesLoaded', files);
-    // } else {
-    //   this.sendAction('fileLoaded', files[0]);
-    // }
+    if (this.get('multiple')) {
+      this.sendAction('filesLoaded', files);
+    } else {
+      this.sendAction('fileLoaded', files[0]);
+    }
   },
 
   /**
