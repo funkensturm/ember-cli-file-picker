@@ -68,6 +68,33 @@ The addon provides the following classes to style the file-picker:
 
 ## Use with CarrierWave
 
+```js
+// app/models/post.js
+import DS from 'ember-data';
+
+var attr = DS.attr;
+
+export default DS.Model.extend({
+	image: attr('raw')
+});
+```
+
+```js
+// app/transforms/raw.js
+import DS from 'ember-data';
+import Ember from 'ember';
+
+export default DS.Transform.extend({
+	deserialize: function(serialized) {
+		return Ember.isNone(serialized) ? {} : serialized;
+	},
+
+	serialize: function(deserialized) {
+		return Ember.isNone(deserialized) ? {} : deserialized;
+	}
+});
+```
+
 ```html
 // app/templates/application.hbs
 
