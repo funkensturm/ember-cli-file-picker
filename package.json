@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-file-picker",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -33,7 +33,12 @@
   },
   "description": "An addon for ember-cli that provides a component to easily add a filepicker to your ember-cli app.",
   "keywords": [
-    "ember-addon", "file-picker", "filepicker", "file", "upload", "dropzone"
+    "ember-addon",
+    "file-picker",
+    "filepicker",
+    "file",
+    "upload",
+    "dropzone"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
