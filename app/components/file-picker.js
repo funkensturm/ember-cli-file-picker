@@ -7,6 +7,7 @@ export default Ember.Component.extend({
   multiple: false,
   preview: true,
   dropzone: true,
+  readAs: 'readAsFile',
 
   /**
    * When the component got inserted
@@ -48,7 +49,14 @@ export default Ember.Component.extend({
     if (this.get('multiple')) {
       this.sendAction('filesLoaded', files);
     } else {
-      this.sendAction('fileLoaded', files[0]);
+      if (this.get('readAs') === 'readAsFile') {
+        this.sendAction('fileLoaded', files[0]);
+      } else {
+        this.readFile(files[0], this.get('readAs'))
+          .then(function(file) {
+            this.sendAction('fileLoaded', file);
+          }.bind(this));
+      }
     }
   },
 
@@ -73,7 +81,7 @@ export default Ember.Component.extend({
   
   addPreviewImage: function(file) {
     var image = this.$(
-      '<img src="' + file.content + '" class="file-picker__preview__image ' +
+      '<img src="' + file.data + '" class="file-picker__preview__image ' +
       (this.get('multiple') ? 'multiple' : 'single') + '">');
 
     this.$('.file-picker__preview').append(image);
@@ -99,7 +107,12 @@ export default Ember.Component.extend({
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       reader.onload = function(event) {
-        resolve({ content: event.target.result });
+        resolve({
+          filename: file.name,
+          type: file.type,
+          data: event.target.result,
+          size: file.size
+        });
       };
 
       reader.onabort = function() {
