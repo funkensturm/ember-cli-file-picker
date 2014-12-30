@@ -23,7 +23,7 @@ export default Ember.Component.extend({
 
   willDestroyElement: function() {
     this.$('.file-picker__input').off(
-      'change', this.fileSelected.bind(this)
+      'change', this.filesSelected.bind(this)
     );
   },
 
