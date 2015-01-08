@@ -10,7 +10,7 @@ It supports:
 
 ## Installation
 
-* `npm install --save-dev ember-cli-uploader`
+* `npm install --save-dev ember-cli-file-picker`
 
 ## Usage
 
