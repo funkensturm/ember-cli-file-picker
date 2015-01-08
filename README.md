@@ -153,8 +153,6 @@ class PostsController < ApplicationController
 			uri[:data] = $3 # data string
 			uri[:extension] = $1.split('/')[1] # "gif"
 			return uri
-		else
-			return nil
 		end
 	end
 end
