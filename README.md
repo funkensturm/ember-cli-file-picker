@@ -24,9 +24,17 @@ It supports:
 
 * `accept` default `*`
 * `multiple` default `false`
-* `preview` default `true`
 * `dropzone` default `true`
-* `readAs` default `readAsFile` Options: readAsFile, readAsArrayBuffer, readAsBinaryString, readAsDataURL, readAsText
+* `preview` default `true`
+* `progress` default `true`
+* `removePreview` 
+* `readAs` default `readAsFile`
+	Options:
+		* readAsFile
+		* readAsArrayBuffer
+		* readAsBinaryString
+		* readAsDataURL
+		* readAsText
 
 ### Actions
 
@@ -58,12 +66,14 @@ export default Ember.ObjectController.extend({
 
 The addon provides the following classes to style the file-picker:
 
-* .file-picker(.single|multiple)
-  * .file-picker__preview
-    * .file-picker__preview__image.single
-    * .file-picker__preview__image.multiple
-  * .file-picker__dropzone
-  * .file-picker__input
+* `.file-picker(.single|multiple &.over)`
+  * `.file-picker__preview`
+    * `.file-picker__preview__image.single`
+    * `.file-picker__preview__image.multiple`
+  * `.file-picker__progress`
+    * `.file-picker__preview__value`
+  * `.file-picker__dropzone`
+  * `.file-picker__input`
 
 
 ## Use with CarrierWave

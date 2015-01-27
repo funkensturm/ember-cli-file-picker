@@ -7,7 +7,13 @@ export default Ember.Component.extend({
   multiple: false,
   preview: true,
   dropzone: true,
+  progress: true,
   readAs: 'readAsFile',
+
+  progressStyle: Ember.computed('progressValue', function() {
+    var width = this.get('progressValue') || 0;
+    return 'width: ' + width + '%;';
+  }),
 
   /**
    * When the component got inserted
@@ -15,6 +21,7 @@ export default Ember.Component.extend({
   didInsertElement: function() {
     this.hideInput();
     this.hidePreview();
+    this.hideProgress();
 
     this.$('.file-picker__input').on(
       'change', this.filesSelected.bind(this)
@@ -66,9 +73,10 @@ export default Ember.Component.extend({
    */
   updatePreview: function(files) {
     if (this.get('multiple')) {
-      // TODOD
+      // TODO
     } else {
       this.clearPreview();
+      this.$('.file-picker__progress').show();
 
       this.readFile(files[0], 'readAsDataURL')
         .then(this.addPreviewImage.bind(this));
@@ -84,6 +92,7 @@ export default Ember.Component.extend({
       '<img src="' + file.data + '" class="file-picker__preview__image ' +
       (this.get('multiple') ? 'multiple' : 'single') + '">');
 
+    this.hideProgress();
     this.$('.file-picker__preview').append(image);
   },
 
@@ -108,6 +117,7 @@ export default Ember.Component.extend({
     return new Ember.RSVP.Promise(function(resolve, reject) {
       reader.onload = function(event) {
         resolve({
+          // TODO rename to file / breaking change
           filename: file.name,
           type: file.type,
           data: event.target.result,
@@ -123,8 +133,12 @@ export default Ember.Component.extend({
         reject({ event: 'onerror', error: error });
       };
 
+      reader.onprogress = function(event) {
+        this.set('progressValue', event.loaded / event.total * 100);
+      }.bind(this);
+
       reader[readAs](file);
-    });
+    }.bind(this));
   },
 
   hideInput: function() {
@@ -134,11 +148,16 @@ export default Ember.Component.extend({
   hidePreview: function() {
     this.$('.file-picker__preview').hide();
   },
-  
+
+  hideProgress: function() {
+    this.$('.file-picker__progress').hide();
+  },
+
   clearPreview: function() {
     this.$('.file-picker__preview').html('');
     this.hidePreview();
-  },
+    this.$('.file-picker__dropzone').show();
+  }.observes('removePreview'),
 
   // handles DOM events
   eventManager: {
@@ -156,7 +175,6 @@ export default Ember.Component.extend({
     dragEnter: function(event, view) {
       if (!view.get('multiple')) {
         view.clearPreview();
-        view.$('.file-picker__dropzone').show();
       }
 
       view.$().addClass('over');

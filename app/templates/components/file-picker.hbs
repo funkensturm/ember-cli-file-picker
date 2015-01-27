@@ -10,4 +10,10 @@
   <div class="file-picker__preview"></div>
 {{/if}}
 
+{{#if progress}}
+  <div class="file-picker__progress">
+    <span class="file-picker__progress__value" {{bind-attr style="progressStyle"}}></span>
+  </div>
+{{/if}}
+
 {{input type="file" value=file accept=accept multiple=multiple class="file-picker__input"}}
