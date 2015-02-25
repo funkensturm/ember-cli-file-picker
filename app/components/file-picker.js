@@ -154,9 +154,14 @@ export default Ember.Component.extend({
   },
 
   clearPreview: function() {
-    this.$('.file-picker__preview').html('');
-    this.hidePreview();
-    this.$('.file-picker__dropzone').show();
+    if (this.get('removePreview')) {
+      this.$('.file-picker__preview').html('');
+      this.hidePreview();
+      this.$('.file-picker__dropzone').show();
+
+      // reset
+      this.set('removePreview', false);
+    }
   }.observes('removePreview'),
 
   // handles DOM events
