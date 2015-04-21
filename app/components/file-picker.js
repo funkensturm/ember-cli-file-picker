@@ -1,6 +1,18 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed,
+  observer,
+  run,
+  assert
+} = Ember;
+
+const { bind } = run;
+const { Promise } = Ember.RSVP;
+const { htmlSafe } = Ember.String;
+
+export default Component.extend({
   classNames: ['file-picker'],
   classNameBindings: ['multiple:multiple:single'],
   accept: '*',
@@ -10,9 +22,9 @@ export default Ember.Component.extend({
   progress: true,
   readAs: 'readAsFile',
 
-  progressStyle: Ember.computed('progressValue', function() {
+  progressStyle: computed('progressValue', function() {
     var width = this.get('progressValue') || 0;
-    return 'width: ' + width + '%;';
+    return htmlSafe('width: ' + width + '%;');
   }),
 
   /**
@@ -24,13 +36,13 @@ export default Ember.Component.extend({
     this.hideProgress();
 
     this.$('.file-picker__input').on(
-      'change', this.filesSelected.bind(this)
+      'change', bind(this, 'filesSelected')
     );
   },
 
   willDestroyElement: function() {
     this.$('.file-picker__input').off(
-      'change', this.filesSelected.bind(this)
+      'change', bind(this, 'filesSelected')
     );
   },
 
@@ -60,9 +72,9 @@ export default Ember.Component.extend({
         this.sendAction('fileLoaded', files[0]);
       } else {
         this.readFile(files[0], this.get('readAs'))
-          .then(function(file) {
+          .then((file) => {
             this.sendAction('fileLoaded', file);
-          }.bind(this));
+          });
       }
     }
   },
@@ -79,7 +91,7 @@ export default Ember.Component.extend({
       this.$('.file-picker__progress').show();
 
       this.readFile(files[0], 'readAsDataURL')
-        .then(this.addPreviewImage.bind(this));
+        .then(bind(this, 'addPreviewImage'));
 
       this.$('.file-picker__dropzone').hide();
     }
@@ -107,14 +119,14 @@ export default Ember.Component.extend({
    * @return {Promise}
    */
   readFile: function(file, readAs) {
-    var reader = new FileReader();
+    const reader = new FileReader();
 
-    Ember.assert(
+    assert(
       'readAs method "' + readAs + '" not implemented',
       (reader[readAs] && readAs !== 'abort')
     );
 
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       reader.onload = function(event) {
         resolve({
           // TODO rename to file / breaking change
@@ -133,12 +145,12 @@ export default Ember.Component.extend({
         reject({ event: 'onerror', error: error });
       };
 
-      reader.onprogress = function(event) {
+      reader.onprogress = (event) => {
         this.set('progressValue', event.loaded / event.total * 100);
-      }.bind(this);
+      };
 
       reader[readAs](file);
-    }.bind(this));
+    });
   },
 
   hideInput: function() {
@@ -153,7 +165,7 @@ export default Ember.Component.extend({
     this.$('.file-picker__progress').hide();
   },
 
-  clearPreview: function() {
+  clearPreview: observer('removePreview', function() {
     if (this.get('removePreview')) {
       this.$('.file-picker__preview').html('');
       this.hidePreview();
@@ -162,7 +174,7 @@ export default Ember.Component.extend({
       // reset
       this.set('removePreview', false);
     }
-  }.observes('removePreview'),
+  }),
 
   // handles DOM events
   eventManager: {
