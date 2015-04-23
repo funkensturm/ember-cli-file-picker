@@ -5,11 +5,11 @@ const {
   computed,
   observer,
   run,
-  assert
+  assert,
+  $
 } = Ember;
 
 const { bind } = run;
-const { Promise } = Ember.RSVP;
 const { htmlSafe } = Ember.String;
 
 export default Component.extend({
@@ -60,11 +60,11 @@ export default Component.extend({
     //   this.set('errors.fileTypeNotAllowed', true);
     //   return;
     // }
-    
+
     if (this.get('preview')) {
       this.updatePreview(files);
     }
-    
+
     if (this.get('multiple')) {
       this.sendAction('filesLoaded', files);
     } else {
@@ -126,7 +126,7 @@ export default Component.extend({
       (reader[readAs] && readAs !== 'abort')
     );
 
-    return new Promise((resolve, reject) => {
+    return new Ember.RSVP.Promise((resolve, reject) => {
       reader.onload = function(event) {
         resolve({
           // TODO rename to file / breaking change
@@ -165,46 +165,51 @@ export default Component.extend({
     this.$('.file-picker__progress').hide();
   },
 
-  clearPreview: observer('removePreview', function() {
-    if (this.get('removePreview')) {
-      this.$('.file-picker__preview').html('');
-      this.hidePreview();
-      this.$('.file-picker__dropzone').show();
+  clearPreview: function() {
+    this.$('.file-picker__preview').html('');
+    this.hidePreview();
+    this.$('.file-picker__dropzone').show();
 
-      // reset
-      this.set('removePreview', false);
+    // reset
+    this.set('removePreview', false);
+  },
+  
+  removePreviewDidChange: observer('removePreview', function() {
+    if (this.get('removePreview')) {
+      this.clearPreview();
     }
   }),
 
   // handles DOM events
-  eventManager: {
-    // Trigger a input click to open file dialog
-    click: function(event, view) {
-      view.$('.file-picker__input').trigger('click');
-    },
-    dragOver: function(event, view) {
-      if (event.preventDefault) {
-        event.preventDefault();
-      }
-
-      event.dataTransfer.dropEffect = 'copy';
-    },
-    dragEnter: function(event, view) {
-      if (!view.get('multiple')) {
-        view.clearPreview();
-      }
-
-      view.$().addClass('over');
-    },
-    dragLeave: function(event, view) {
-      view.$().removeClass('over');
-    },
-    drop: function(event, view) {
-      if (event.preventDefault) {
-        event.preventDefault();
-      }
-
-      view.handleFiles(event.dataTransfer.files);
+  // Trigger a input click to open file dialog
+  click: function(event) {
+    if (!$(event.target).hasClass('file-picker__input')) {
+      this.$('.file-picker__input').trigger('click');
     }
+  },
+  dragOver: function(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    event.dataTransfer.dropEffect = 'copy';
+  },
+  dragEnter: function() {
+    if (!this.get('multiple')) {
+      this.clearPreview();
+    }
+
+    this.$().addClass('over');
+  },
+  // TODO fix
+  // dragLeave: function() {
+  //   this.$().removeClass('over');
+  // },
+  drop: function(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+
+    this.handleFiles(event.dataTransfer.files);
   }
 });
