@@ -55,11 +55,11 @@ export default Component.extend({
   },
 
   handleFiles: function(files) {
-    // TODO implement
-    // if (!this.isValidFileType(files)) {
-    //   this.set('errors.fileTypeNotAllowed', true);
-    //   return;
-    // }
+    if (this.filesAreValid === 'function') {
+      if (!this.filesAreValid(files)) {
+        return;
+      }
+    }
 
     if (this.get('preview')) {
       this.updatePreview(files);
