@@ -21,6 +21,7 @@ export default Component.extend({
   dropzone: true,
   progress: true,
   readAs: 'readAsFile',
+  errors: [],
 
   progressStyle: computed('progressValue', function() {
     var width = this.get('progressValue') || 0;
