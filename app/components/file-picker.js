@@ -98,7 +98,7 @@ export default Component.extend({
 
     this.$('.file-picker__preview').show();
   },
-  
+
   addPreviewImage: function(file) {
     var image = this.$(
       '<img src="' + file.data + '" class="file-picker__preview__image ' +
