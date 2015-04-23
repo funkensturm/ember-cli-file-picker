@@ -25,7 +25,12 @@ export default Component.extend({
 
   progressStyle: computed('progressValue', function() {
     var width = this.get('progressValue') || 0;
-    return htmlSafe('width: ' + width + '%;');
+
+    if (Ember.HTMLBars) {
+      return htmlSafe('width: ' + width + '%;');
+    } else {
+      return Ember.Handlebars.SafeString('width: ' + width + '%;');
+    }
   }),
 
   /**
