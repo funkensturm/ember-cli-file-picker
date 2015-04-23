@@ -27,7 +27,7 @@ export default Component.extend({
     var width = this.get('progressValue') || 0;
 
     if (Ember.Handlebars) {
-      return Ember.Handlebars.SafeString('width: ' + width + '%;');
+      return new Ember.Handlebars.SafeString('width: ' + width + '%;').string;
     } else {
       return htmlSafe('width: ' + width + '%;');
     }
