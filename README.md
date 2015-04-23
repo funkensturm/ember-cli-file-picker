@@ -7,6 +7,7 @@ It supports:
 * A dropzone to drag and drop your file
 * Currently it only support single file uploads but multiples will come soon
 
+Version `0.0.5` needs ember >= `1.11.1`.
 
 ## Installation
 
