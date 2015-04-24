@@ -25,6 +25,7 @@ Version `0.0.5` needs ember >= `1.11.1`.
 
 * `accept` default `*`
 * `multiple` default `false`
+* `selectOnClick` default `true`
 * `dropzone` default `true`
 * `preview` default `true`
 * `progress` default `true`
