@@ -195,7 +195,7 @@ default Component.extend({
 
   // handles DOM events
   // Trigger a input click to open file dialog
-  click: function(event, view) {
+  click: function(event) {
     if (this.get('selectOnClick') === true) {
       if (!$(event.target).hasClass('file-picker__input')) {
         this.$('.file-picker__input').trigger('click');
