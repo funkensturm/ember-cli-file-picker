@@ -9,10 +9,15 @@ const {
   $
 } = Ember;
 
-const { bind } = run;
-const { htmlSafe } = Ember.String;
+const {
+  bind
+} = run;
+const {
+  htmlSafe
+} = Ember.String;
 
-export default Component.extend({
+export
+default Component.extend({
   classNames: ['file-picker'],
   classNameBindings: ['multiple:multiple:single'],
   accept: '*',
@@ -21,6 +26,8 @@ export default Component.extend({
   dropzone: true,
   progress: true,
   readAs: 'readAsFile',
+  selectOnClick: true,
+  count: 0,
   errors: [],
 
   progressStyle: computed('progressValue', function() {
@@ -111,7 +118,7 @@ export default Component.extend({
   },
 
   /**
-   * Reads a file 
+   * Reads a file
    * @param {File} file A file
    * @param {String} readAs One of
    *  - readAsArrayBuffer
@@ -124,8 +131,7 @@ export default Component.extend({
     const reader = new FileReader();
 
     assert(
-      'readAs method "' + readAs + '" not implemented',
-      (reader[readAs] && readAs !== 'abort')
+      'readAs method "' + readAs + '" not implemented', (reader[readAs] && readAs !== 'abort')
     );
 
     return new Ember.RSVP.Promise((resolve, reject) => {
@@ -140,11 +146,16 @@ export default Component.extend({
       };
 
       reader.onabort = function() {
-        reject({ event: 'onabort' });
+        reject({
+          event: 'onabort'
+        });
       };
 
       reader.onerror = function(error) {
-        reject({ event: 'onerror', error: error });
+        reject({
+          event: 'onerror',
+          error: error
+        });
       };
 
       reader.onprogress = (event) => {
@@ -175,7 +186,7 @@ export default Component.extend({
     // reset
     this.set('removePreview', false);
   },
-  
+
   removePreviewDidChange: observer('removePreview', function() {
     if (this.get('removePreview')) {
       this.clearPreview();
@@ -184,34 +195,48 @@ export default Component.extend({
 
   // handles DOM events
   // Trigger a input click to open file dialog
-  click: function(event) {
-    if (!$(event.target).hasClass('file-picker__input')) {
-      this.$('.file-picker__input').trigger('click');
+  click: function(event, view) {
+    if (this.get('selectOnClick') === true) {
+      if (!$(event.target).hasClass('file-picker__input')) {
+        this.$('.file-picker__input').trigger('click');
+      }
     }
   },
+  /* Drag'n'Drop events */
   dragOver: function(event) {
     if (event.preventDefault) {
       event.preventDefault();
     }
-
     event.dataTransfer.dropEffect = 'copy';
   },
-  dragEnter: function() {
-    if (!this.get('multiple')) {
-      this.clearPreview();
-    }
-
-    this.$().addClass('over');
-  },
-  // TODO fix
-  // dragLeave: function() {
-  //   this.$().removeClass('over');
-  // },
   drop: function(event) {
     if (event.preventDefault) {
       event.preventDefault();
     }
 
     this.handleFiles(event.dataTransfer.files);
+    this.set('count', 0);
+    this.$().removeClass('over');
+  },
+  dragEnter: function(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+    if (!this.get('multiple')) {
+      this.clearPreview();
+    }
+    var count = this.incrementProperty('count');
+    if (count === 1) {
+      this.$().addClass('over');
+    }
+  },
+  dragLeave: function(event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    }
+    var count = this.decrementProperty('count');
+    if (count === 0) {
+      this.$().removeClass('over');
+    }
   }
 });
