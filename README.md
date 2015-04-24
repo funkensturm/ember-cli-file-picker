@@ -7,6 +7,7 @@ It supports:
 * A dropzone to drag and drop your file
 * Currently it only support single file uploads but multiples will come soon
 
+Version `0.0.5` needs ember >= `1.11.1`.
 
 ## Installation
 
@@ -27,7 +28,6 @@ It supports:
 * `dropzone` default `true`
 * `preview` default `true`
 * `progress` default `true`
-* `removePreview` 
 * `readAs` default `readAsFile`
 	Options:
 		* readAsFile
@@ -61,6 +61,28 @@ export default Ember.ObjectController.extend({
 ### Bindings
 
 * `errors`
+* `removePreview`
+
+### Validations
+
+If you need to validate the files you can subclass the component and add a `filesAreValid` method.
+The method should return a falsy value to stop file handling.
+
+```js
+// app/components/file-picker.js
+
+import Ember from 'ember';
+import FilePicker from 'ember-cli-file-picker/components/file-picker';
+
+export default FilePicker.extend({
+  filesAreValid: function(files) {
+    // do something with the files and add errors:
+    this.get('errors').addObject('wrong file type');
+    return false;
+  }
+});
+```
+
 
 ### CSS
 
