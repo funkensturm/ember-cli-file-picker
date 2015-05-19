@@ -184,7 +184,7 @@ default Component.extend({
     this.$('.file-picker__dropzone').show();
 
     // reset
-    this.set('removePreview', false);
+    // this.set('removePreview', false);
   },
 
   removePreviewDidChange: observer('removePreview', function() {
