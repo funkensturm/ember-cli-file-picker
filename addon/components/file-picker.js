@@ -63,7 +63,7 @@ default Component.extend({
   },
 
   handleFiles: function(files) {
-    if (this.filesAreValid === 'function') {
+    if (typeof(this.filesAreValid) === 'function') {
       if (!this.filesAreValid(files)) {
         return;
       }
