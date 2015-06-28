@@ -15,6 +15,9 @@ It supports:
 
 ## Changelog
 
+### 0.0.6
+* removes "Binding style attributes..." warning
+
 ### 0.0.5
 * ember-cli-file-picker now depends on ember >= `1.11.1`
 
