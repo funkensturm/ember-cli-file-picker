@@ -1,20 +1,21 @@
 import Ember from 'ember';
-import {
-  moduleForComponent,
-  test
-} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 
 const {
   get: get
 } = Ember;
 
-moduleForComponent('file-picker', 'FilePickerComponent');
+moduleForComponent('file-picker', 'Unit | Component | file picker', {
+  // Specify the other units that are required for this test
+  // needs: ['component:foo', 'helper:bar'],
+  unit: true
+});
 
 test('it renders', function(assert) {
   assert.expect(2);
 
   // Creates the component instance
-  var component = this.subject();
+  const component = this.subject();
   assert.equal(component._state, 'preRender');
 
   // Renders the component to the page
@@ -25,7 +26,7 @@ test('it renders', function(assert) {
 test('it has correct defaults', function(assert) {
   assert.expect(6);
 
-  var component = this.subject();
+  const component = this.subject();
 
   assert.equal(get(component, 'accept'), '*');
   assert.equal(get(component, 'multiple'), false);

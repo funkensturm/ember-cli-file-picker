@@ -9,11 +9,14 @@ It supports:
 * A dropzone to drag and drop your file
 * Currently it only support single file uploads but multiples will come soon
 
-Version `0.0.5` needs ember >= `1.11.1`.
-
 ## Installation
 
-* `npm install --save-dev ember-cli-file-picker`
+* `ember install ember-cli-file-picker`
+
+## Changelog
+
+### 0.0.5
+* ember-cli-file-picker now depends on ember >= `1.11.1`
 
 ## Usage
 
@@ -162,7 +165,7 @@ class PostsController < ApplicationController
 		params[:post][:image] = convert_to_upload(params[:post][:image])
 		@post = Post.create(params)
 	end
-	
+
 	protected
 
 	def convert_to_upload(image)

@@ -4,17 +4,16 @@ const {
   Component,
   computed,
   observer,
-  run,
+  run: {
+    bind
+  },
+  String: {
+    htmlSafe
+  },
   assert,
   $
 } = Ember;
 
-const {
-  bind
-} = run;
-const {
-  htmlSafe
-} = Ember.String;
 
 export
 default Component.extend({

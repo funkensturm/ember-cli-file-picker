@@ -1,2 +1,1 @@
-import FilePicker from 'ember-cli-file-picker/components/file-picker';
-export default FilePicker;
+export { default } from 'ember-cli-file-picker/components/file-picker';
