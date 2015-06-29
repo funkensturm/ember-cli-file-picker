@@ -15,6 +15,9 @@ It supports:
 
 ## Changelog
 
+### 0.0.7
+* [BUGFIX] `filesAreValid` was never called. [@green-arrow](https://github.com/green-arrow)
+
 ### 0.0.6
 * removes "Binding style attributes..." warning
 
