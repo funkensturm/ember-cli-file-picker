@@ -15,8 +15,7 @@ const {
 } = Ember;
 
 
-export
-default Component.extend({
+export default Component.extend({
   classNames: ['file-picker'],
   classNameBindings: ['multiple:multiple:single'],
   accept: '*',
@@ -24,6 +23,7 @@ default Component.extend({
   preview: true,
   dropzone: true,
   progress: true,
+  hideFileInput: true,
   readAs: 'readAsFile',
   selectOnClick: true,
   count: 0,
@@ -39,7 +39,9 @@ default Component.extend({
    * When the component got inserted
    */
   didInsertElement: function() {
-    this.hideInput();
+    if (this.get('hideFileInput')) {
+      this.hideInput();
+    }
     this.hidePreview();
     this.hideProgress();
 

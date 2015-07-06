@@ -24,7 +24,7 @@ test('it renders', function(assert) {
 });
 
 test('it has correct defaults', function(assert) {
-  assert.expect(6);
+  assert.expect(7);
 
   const component = this.subject();
 
@@ -33,22 +33,23 @@ test('it has correct defaults', function(assert) {
   assert.equal(get(component, 'preview'), true);
   assert.equal(get(component, 'dropzone'), true);
   assert.equal(get(component, 'progress'), true);
+  assert.equal(get(component, 'hideFileInput'), true);
   assert.equal(get(component, 'readAs'), 'readAsFile');
 });
 
 test('it handles `filesAreValid` when it returns TRUE', function(assert) {
   assert.expect(2);
 
-  var files = ['test'];
-  var component = this.subject({
-    filesAreValid: function() {
-      assert.ok(true, '`filesAreValid` is called when defined');
-      return true;
-    },
-    updatePreview: function() {
-      assert.ok(true, '`handleFiles` continues execution when `filesAreValid returns true`');
-    }
-  });
+  const files = ['test'],
+    component = this.subject({
+      filesAreValid: function() {
+        assert.ok(true, '`filesAreValid` is called when defined');
+        return true;
+      },
+      updatePreview: function() {
+        assert.ok(true, '`handleFiles` continues execution when `filesAreValid returns true`');
+      }
+    });
 
   component.handleFiles(files);
 });
@@ -56,15 +57,37 @@ test('it handles `filesAreValid` when it returns TRUE', function(assert) {
 test('it handles `filesAreValid` when it returns FALSE', function(assert) {
   assert.expect(0);
 
-  var files = ['test'];
-  var component = this.subject({
-    filesAreValid: function() {
-      return false;
-    },
-    updatePreview: function() {
-      assert.ok(false, '`handleFiles` continued execution when `filesAreValid returned false`');
-    }
-  });
+  const files = ['test'],
+    component = this.subject({
+      filesAreValid: function() {
+        return false;
+      },
+      updatePreview: function() {
+        assert.ok(false, '`handleFiles` continued execution when `filesAreValid returned false`');
+      }
+    });
 
   component.handleFiles(files);
+});
+
+test('it hides file input', function(assert) {
+  assert.expect(1);
+
+  const component = this.subject({});
+
+  this.render();
+
+  assert.equal(component.$('input:hidden').length, 1);
+});
+
+test('it shows file input', function(assert) {
+  assert.expect(1);
+
+  const component = this.subject({
+    hideFileInput: false
+  });
+
+  this.render();
+
+  assert.equal(component.$('input:hidden').length, 0);
 });
