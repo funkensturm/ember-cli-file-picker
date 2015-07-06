@@ -15,6 +15,9 @@ It supports:
 
 ## Changelog
 
+### 0.0.8
+* [ENHANCEMENT] Add `hideFileInput` option to configure the file input visibility.
+
 ### 0.0.7
 * [BUGFIX] `filesAreValid` was never called. [@green-arrow](https://github.com/green-arrow)
 
@@ -40,6 +43,7 @@ It supports:
 * `dropzone` default `true`
 * `preview` default `true`
 * `progress` default `true`
+* `hideFileInput` default `true`
 * `readAs` default `readAsFile`
 	Options:
 		* readAsFile
