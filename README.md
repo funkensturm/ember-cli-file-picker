@@ -1,6 +1,7 @@
 # Ember-cli-file-picker
 
 [![Build Status](https://travis-ci.org/funkensturm/ember-cli-file-picker.svg)](https://travis-ci.org/funkensturm/ember-cli-file-picker)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-cli-file-picker.svg)](http://emberobserver.com/addons/ember-cli-file-picker)
 
 An addon for ember-cli that provides a component to easily add a filepicker to your ember-cli app.
 
