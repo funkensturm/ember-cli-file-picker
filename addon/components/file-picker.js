@@ -61,7 +61,12 @@ export default Component.extend({
    * @param  {Event} event The file change event
    */
   filesSelected: function(event) {
-    this.handleFiles(event.target.files);
+    var files = event.target.files;
+    if (files.length) {
+      this.handleFiles(files);
+    } else {
+      this.clearPreview();
+    }
   },
 
   handleFiles: function(files) {
