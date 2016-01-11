@@ -16,6 +16,9 @@ It supports:
 
 ## Changelog
 
+### 0.0.9
+* [BUGFIX] Restore preview after selecting 'cancel' from the browser file dialog. [@quiaro](https://github.com/quiaro)
+
 ### 0.0.8
 * [ENHANCEMENT] Add `hideFileInput` option to configure the file input visibility.
 
