@@ -81,14 +81,14 @@ export default Component.extend({
     }
 
     if (this.get('multiple')) {
-      this.sendAction('filesLoaded', files);
+      this.sendAction('filesLoaded', files, this);
     } else {
       if (this.get('readAs') === 'readAsFile') {
-        this.sendAction('fileLoaded', files[0]);
+        this.sendAction('fileLoaded', files[0], this);
       } else {
         this.readFile(files[0], this.get('readAs'))
           .then((file) => {
-            this.sendAction('fileLoaded', file);
+            this.sendAction('fileLoaded', file, this);
           });
       }
     }
