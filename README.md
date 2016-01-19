@@ -49,12 +49,11 @@ It supports:
 * `progress` default `true`
 * `hideFileInput` default `true`
 * `readAs` default `readAsFile`
-	Options:
-		* readAsFile
-		* readAsArrayBuffer
-		* readAsBinaryString
-		* readAsDataURL
-		* readAsText
+	* `readAsFile`
+	* `readAsArrayBuffer`
+	* `readAsBinaryString`
+	* `readAsDataURL`
+	* `readAsText`
 
 ### Actions
 
