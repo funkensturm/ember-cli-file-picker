@@ -1,5 +1,4 @@
-/* jshint node:true */
-
+/*jshint node:true*/
 module.exports = {
   scenarios: [
     {
