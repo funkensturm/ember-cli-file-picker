@@ -117,6 +117,38 @@ The addon provides the following classes to style the file-picker:
   * `.file-picker__dropzone`
   * `.file-picker__input`
 
+## Test helpers
+ember-cli-file-picker exports a test helper for acceptance tests.
+
+```js
+// tests/helpers/start-app.js
+import './ember-cli-file-picker';
+
+// tests/.jshintrc
+{
+  "predef": [
+    "uploadFile"
+  ]
+}
+
+// tests/acceptance/file-upload.js
+import { test } from 'qunit';
+import moduleForAcceptance from 'hoch1-catalog/tests/helpers/module-for-acceptance';
+
+moduleForAcceptance('Acceptance | file upload');
+
+test('visiting /file-upload', function(assert) {
+  visit('/file-upload');
+	const content = [
+	  '"var";"value"',
+		'"foo";"10"',
+		'"bar";"20"'
+	];
+	const filename = 'example.csv';
+	const lastModifiedDate = new Date();
+  uploadFile(content, filename, lastModifiedDate);
+});
+```
 
 ## Use with CarrierWave
 
