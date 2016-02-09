@@ -211,39 +211,47 @@ export default Component.extend({
   },
   /* Drag'n'Drop events */
   dragOver: function(event) {
-    if (event.preventDefault) {
-      event.preventDefault();
+    if (this.get('dropzone') === true) {
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
+      event.dataTransfer.dropEffect = 'copy';
     }
-    event.dataTransfer.dropEffect = 'copy';
   },
   drop: function(event) {
-    if (event.preventDefault) {
-      event.preventDefault();
-    }
+    if (this.get('dropzone') === true) {
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
 
-    this.handleFiles(event.dataTransfer.files);
-    this.set('count', 0);
-    this.$().removeClass('over');
+      this.handleFiles(event.dataTransfer.files);
+      this.set('count', 0);
+      this.$().removeClass('over');
+    }
   },
   dragEnter: function(event) {
-    if (event.preventDefault) {
-      event.preventDefault();
-    }
-    if (!this.get('multiple')) {
-      this.clearPreview();
-    }
-    var count = this.incrementProperty('count');
-    if (count === 1) {
-      this.$().addClass('over');
+    if (this.get('dropzone') === true) {
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
+      if (!this.get('multiple')) {
+        this.clearPreview();
+      }
+      var count = this.incrementProperty('count');
+      if (count === 1) {
+        this.$().addClass('over');
+      }
     }
   },
   dragLeave: function(event) {
-    if (event.preventDefault) {
-      event.preventDefault();
-    }
-    var count = this.decrementProperty('count');
-    if (count === 0) {
-      this.$().removeClass('over');
+    if (this.get('dropzone') === true) {
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
+      var count = this.decrementProperty('count');
+      if (count === 0) {
+        this.$().removeClass('over');
+      }
     }
   }
 });
