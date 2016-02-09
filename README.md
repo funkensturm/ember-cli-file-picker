@@ -71,7 +71,8 @@ export default Ember.ObjectController.extend({
 			// readAs="readAsFile"
 			console.log(file.name, file.type, file.size);
 			// readAs="readAsArrayBuffer|readAsBinaryString|readAsDataURL|readAsText"
-			console.log(file.filename, file.type, file.data, file.size);
+			console.log(file.name, file.type, file.data, file.size);
+			// There is also file.filename for backward compatibility
 		}
 	}
 });
@@ -190,7 +191,7 @@ class PostsController < ApplicationController
 		temp_img_file.rewind
 
 		ActionDispatch::Http::UploadedFile.new({
-		  filename: image[:filename],
+		  filename: image[:name],
 		  type: image[:type],
 		  tempfile: temp_img_file
 		})

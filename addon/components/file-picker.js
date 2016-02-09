@@ -143,8 +143,9 @@ export default Component.extend({
     return new Ember.RSVP.Promise((resolve, reject) => {
       reader.onload = function(event) {
         resolve({
-          // TODO rename to file / breaking change
+          // TODO deprecate filename
           filename: file.name,
+          name: file.name,
           type: file.type,
           data: event.target.result,
           size: file.size
