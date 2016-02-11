@@ -214,11 +214,18 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     event.dataTransfer.dropEffect = 'copy';
   },
   drop: function(event) {
     if (event.preventDefault) {
       event.preventDefault();
+    }
+    if (!this.get('dropzone')) {
+      return;
     }
 
     this.handleFiles(event.dataTransfer.files);
@@ -229,6 +236,10 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     if (!this.get('multiple')) {
       this.clearPreview();
     }
@@ -241,6 +252,10 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     var count = this.decrementProperty('count');
     if (count === 0) {
       this.$().removeClass('over');
