@@ -139,13 +139,17 @@ moduleForAcceptance('Acceptance | file upload');
 
 test('visiting /file-upload', function(assert) {
   visit('/file-upload');
-	const content = [
-	  '"var";"value"',
-		'"foo";"10"',
-		'"bar";"20"'
-	];
-	const filename = 'example.csv';
-	const lastModifiedDate = new Date();
+
+  // content is passed to [Blob() constructor](https://developer.mozilla.org/de/docs/Web/API/Blob/Blob)
+  const content = [
+    '"var";"value"\n',
+    '"foo";"10"\n',
+    '"bar";"20"'
+  ];
+  const filename = 'example.csv';
+  const lastModifiedDate = new Date();
+
+  // all arguments are optional
   uploadFile(content, filename, lastModifiedDate);
 });
 ```
