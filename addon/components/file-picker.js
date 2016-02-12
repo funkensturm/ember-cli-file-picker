@@ -24,6 +24,7 @@ export default Component.extend({
   preview: true,
   dropzone: true,
   progress: true,
+  showProgress: false,
   hideFileInput: true,
   readAs: 'readAsFile',
   selectOnClick: true,
@@ -106,7 +107,7 @@ export default Component.extend({
       // TODO
     } else {
       this.clearPreview();
-      this.$('.file-picker__progress').show();
+      this.set('showProgress', true);
 
       readFile(files[0], 'readAsDataURL', bind(this, 'updateProgress'))
         .then(bind(this, 'addPreviewImage'));
@@ -150,7 +151,7 @@ export default Component.extend({
   },
 
   hideProgress: function() {
-    this.$('.file-picker__progress').hide();
+    this.set('showProgress', false);
   },
 
   clearPreview: function() {
@@ -228,5 +229,18 @@ export default Component.extend({
     if (count === 0) {
       this.$().removeClass('over');
     }
-  }
+  },
+
+  /*
+   * returns true if browser supportes progress element
+   *
+   * browser support overview:
+   * http://caniuse.com/#feat=progress
+   *
+   * uses test from Modernizr
+   * https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem/progress-meter.js
+   */
+  isProgressSupported: Ember.computed(function() {
+    return document.createElement('progress').max !== undefined;
+  })
 });

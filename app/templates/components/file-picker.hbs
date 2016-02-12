@@ -11,9 +11,15 @@
 {{/if}}
 
 {{#if progress}}
-  <div class="file-picker__progress">
-    <span class="file-picker__progress__value" style={{progressStyle}}></span>
-  </div>
+  {{#if showProgress}}
+    {{#if isProgressSupported}}
+      <progress value={{progressValue}} max="100" class="file-picker__progress">{{progress}} %</progress>
+    {{else}}
+      <div class="file-picker__progress">
+        <span class="file-picker__progress__value" style={{progressStyle}}></span>
+      </div>
+    {{/if}}
+  {{/if}}
 {{/if}}
 
 {{input type="file" value=file accept=accept multiple=multiple class="file-picker__input"}}
