@@ -35,7 +35,8 @@
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-try": "~0.0.8"
+    "ember-truth-helpers": "1.2.0",
+    "ember-try": "~0.1.2"
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.5"

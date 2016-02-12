@@ -11,6 +11,7 @@ const {
   String: {
     htmlSafe
   },
+  isEmpty,
   $
 } = Ember;
 
@@ -125,7 +126,18 @@ export default Component.extend({
   },
 
   updateProgress: function(event) {
-    this.set('progressValue', event.loaded / event.total * 100);
+    const {
+      loaded,
+      total
+    } = event;
+
+    let value = null;
+
+    if (!isEmpty(loaded) && !isEmpty(total) && parseFloat(total) !== 0) {
+      value = loaded / total * 100;
+    }
+
+    this.set('progressValue', value);
   },
 
   hideInput: function() {
@@ -169,11 +181,18 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     event.dataTransfer.dropEffect = 'copy';
   },
   drop: function(event) {
     if (event.preventDefault) {
       event.preventDefault();
+    }
+    if (!this.get('dropzone')) {
+      return;
     }
 
     this.handleFiles(event.dataTransfer.files);
@@ -184,6 +203,10 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     if (!this.get('multiple')) {
       this.clearPreview();
     }
@@ -196,6 +219,10 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     var count = this.decrementProperty('count');
     if (count === 0) {
       this.$().removeClass('over');

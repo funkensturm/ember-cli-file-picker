@@ -1,5 +1,21 @@
 <h2 id="title">Welcome to Ember</h2>
 
-{{#file-picker fileLoaded="fileLoaded"}}
+<select onchange={{action (mut readAs) value="target.value"}}>
+  {{#each readAsValues as |readAsValue|}}
+    <option value={{readAsValue}} selected={{eq readAsValue readAs}}>{{readAsValue}}</option>
+  {{/each}}
+</select>
+
+{{#file-picker fileLoaded="fileLoaded" readAs=readAs}}
     Drag here or click to upload a file
 {{/file-picker}}
+
+{{#if loaded}}
+  <dl>
+    <dt>name</dt><dd class="name">{{name}}</dd>
+    <dt>size</dt><dd class="size">{{size}}</dd>
+    {{#if (eq readAs 'readAsText')}}
+      <dt>data</dt><dd class="data">{{data}}</dd>
+    {{/if}}
+  </dl>
+{{/if}}
