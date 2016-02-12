@@ -7,7 +7,21 @@ moduleForComponent('file-picker', 'Integration | Component | file picker', {
 });
 
 test('it\'s testable', function(assert) {
-  assert.expect(0);
-  this.render(hbs`{{file-picker}}`);
-  uploadFileHelper();
+  assert.expect(3);
+
+  // test double for the external action
+  this.set('externalAction', (actual) => {
+    const {
+      size,
+      type,
+      name
+    } = actual;
+
+    assert.equal(size, 4, 'has a size of 4');
+    assert.equal(type, 'text/plain', 'has a type of text/plain');
+    assert.equal(name, 'test.txt', 'has the correct name');
+  });
+
+  this.render(hbs`{{file-picker fileLoaded=(action externalAction)}}`);
+  uploadFileHelper(['test']);
 });
