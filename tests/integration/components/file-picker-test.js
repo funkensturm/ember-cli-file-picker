@@ -1,6 +1,11 @@
+import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { uploadFileHelper } from '../../helpers/ember-cli-file-picker';
+
+const {
+  run
+} = Ember;
 
 moduleForComponent('file-picker', 'Integration | Component | file picker', {
   integration: true
@@ -23,5 +28,8 @@ test('it\'s testable', function(assert) {
   });
 
   this.render(hbs`{{file-picker fileLoaded=(action externalAction)}}`);
-  uploadFileHelper(['test']);
+
+  run(() => {
+    uploadFileHelper(['test']);
+  });
 });

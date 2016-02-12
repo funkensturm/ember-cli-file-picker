@@ -23,9 +23,7 @@ const uploadFileHelper = function(content, options) {
     files: [file]
   };
 
-  Ember.run(() => {
-    this.$('.file-picker__input').trigger(event);
-  });
+  this.$('.file-picker__input').trigger(event);
 };
 
 const uploadFile = Ember.Test.registerAsyncHelper('uploadFile', function(app, content, options) {
