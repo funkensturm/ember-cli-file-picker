@@ -29,6 +29,7 @@ export default Component.extend({
   selectOnClick: true,
   count: 0,
   errors: [],
+  progressValue: null,
 
   progressStyle: computed('progressValue', function() {
     var width = this.get('progressValue') || 0;
