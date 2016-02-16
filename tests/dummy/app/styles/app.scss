@@ -1,0 +1,48 @@
+html, body {
+  margin: 20px;
+}
+
+.file-picker {
+  cursor: pointer;
+  margin-bottom: 10px;
+
+  &__dropzone {
+    border: 2px dashed #fff;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  &__preview {
+    max-width: 320px;
+    max-height: 109px;
+    margin: 0 auto;
+    text-align: center;
+    cursor: default;
+
+    &__image.single {
+      max-width: 320px;
+      max-height: 109px;
+    }
+  }
+
+  &__progress {
+    height: 9px;
+    position: relative;
+    margin: 50px 60px;
+    background-color: rgba(255,255,255,0.1);
+
+    &__value {
+      display: block;
+      height: 100%;
+      background-color: rgba(255,255,255,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+  }
+}
+
+.file-picker.over {
+  .file-picker__dropzone {
+    border: 2px dashed #0a2a65;
+  }
+}

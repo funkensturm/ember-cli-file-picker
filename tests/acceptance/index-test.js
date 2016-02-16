@@ -8,7 +8,9 @@ test('Works for readAsFile', function(assert) {
 
   uploadFile(
     ['file content'],
-    'file.name'
+    {
+      name: 'file.name'
+    }
   );
 
   andThen(function() {
@@ -24,7 +26,9 @@ test('Works for readAsText', function(assert) {
 
   uploadFile(
     ['file content'],
-    'file.name'
+    {
+      name: 'file.name'
+    }
   );
 
   andThen(function() {

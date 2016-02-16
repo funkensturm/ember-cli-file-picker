@@ -2,28 +2,32 @@
 
 import Ember from 'ember';
 
-const uploadFileHelper = function(content, name, lastModifiedDate) {
-  const file = new Blob(
-    content ? content : ['']
-  );
-  file.name = name ? name : '';
-  file.lastModifiedDate = lastModifiedDate ? lastModifiedDate : new Date();
+function createFile(content = ['test'], options = {}) {
+  const {
+    name,
+    type,
+    lastModifiedDate
+  } = options;
+
+  const file = new Blob(content, {type : type ? type : 'text/plain'});
+  file.name = name ? name : 'test.txt';
+
+  return file;
+}
+
+const uploadFileHelper = function(content, options) {
+  const file = createFile(content, options);
+
   const event = jQuery.Event('change');
   event.target = {
     files: [file]
   };
 
-  Ember.run(() => {
-    this.$('.file-picker__input').trigger(event);
-  });
+  this.$('.file-picker__input').trigger(event);
 };
 
-const uploadFile = Ember.Test.registerAsyncHelper('uploadFile', function(app, content, name, lastModifiedDate) {
-  const file = new Blob(
-    content ? content : ['']
-  );
-  file.name = name ? name : '';
-  file.lastModifiedDate = lastModifiedDate ? lastModifiedDate : new Date();
+const uploadFile = Ember.Test.registerAsyncHelper('uploadFile', function(app, content, options) {
+  const file = createFile(content, options);
 
   return triggerEvent(
     '.file-picker__input',
