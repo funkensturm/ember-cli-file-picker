@@ -44,6 +44,7 @@ It supports:
 * `accept` default `*`
 * `multiple` default `false`
 * `selectOnClick` default `true`
+* `validateExtensions` default `true`
 * `dropzone` default `true`
 * `preview` default `true`
 * `progress` default `true`

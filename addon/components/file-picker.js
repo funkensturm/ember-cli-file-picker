@@ -25,6 +25,7 @@ export default Component.extend({
   dropzone: true,
   progress: true,
   showProgress: false,
+  validateExtension: true,
   hideFileInput: true,
   readAs: 'readAsFile',
   selectOnClick: true,
@@ -73,11 +74,37 @@ export default Component.extend({
     }
   },
 
-  handleFiles: function(files) {
+  _invalidExtension: function(files) {
+    let accept = this.get('accept');
+
+    if (accept === '*') {
+      return;
+    }
+
+    let validExtensions = accept.split(',');
+
+    let fileExtensions = files.map(file => `.${file.filename.split('.').slice(-1)[0]}`);
+
+    return fileExtensions.some(extension => validExtensions.indexOf(extension) === -1);
+  },
+
+  _validate: function(files) {
     if (typeof(this.filesAreValid) === 'function') {
       if (!this.filesAreValid(files)) {
         return;
       }
+    }
+
+    if (!this.get('validateExtension')) {
+      return;
+    }
+
+    return !this._invalidExtension(files);
+  },
+
+  handleFiles: function(files) {
+    if (!this._validate(files)) {
+      return;
     }
 
     if (this.get('preview')) {
