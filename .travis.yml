@@ -1,9 +1,10 @@
 ---
 language: node_js
 node_js:
-  - "0.12"
+  - "stable"
 
-sudo: false
+sudo: required
+dist: trusty
 
 addons:
   apt:
@@ -37,11 +38,11 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "npm config set spin false"
-  - "npm install -g npm@^2"
+  - "npm install -g npm@^3"
 
 install:
   - npm install -g bower
-  - npm install
+  - npm install --no-optional
   - bower install
 
 script:
