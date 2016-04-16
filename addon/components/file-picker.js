@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { readFile } from '../lib/helpers';
 
 const {
   Component,
@@ -10,7 +11,7 @@ const {
   String: {
     htmlSafe
   },
-  assert,
+  isEmpty,
   $
 } = Ember;
 
@@ -23,11 +24,13 @@ export default Component.extend({
   preview: true,
   dropzone: true,
   progress: true,
+  showProgress: false,
   hideFileInput: true,
   readAs: 'readAsFile',
   selectOnClick: true,
   count: 0,
   errors: [],
+  progressValue: null,
 
   progressStyle: computed('progressValue', function() {
     var width = this.get('progressValue') || 0;
@@ -66,6 +69,7 @@ export default Component.extend({
       this.handleFiles(files);
     } else {
       this.clearPreview();
+      this.set('progressValue', 0);
     }
   },
 
@@ -86,7 +90,7 @@ export default Component.extend({
       if (this.get('readAs') === 'readAsFile') {
         this.sendAction('fileLoaded', files[0]);
       } else {
-        this.readFile(files[0], this.get('readAs'))
+        readFile(files[0], this.get('readAs'), bind(this, 'updateProgress'))
           .then((file) => {
             this.sendAction('fileLoaded', file);
           });
@@ -103,9 +107,9 @@ export default Component.extend({
       // TODO
     } else {
       this.clearPreview();
-      this.$('.file-picker__progress').show();
+      this.set('showProgress', true);
 
-      this.readFile(files[0], 'readAsDataURL')
+      readFile(files[0], 'readAsDataURL', bind(this, 'updateProgress'))
         .then(bind(this, 'addPreviewImage'));
 
       this.$('.file-picker__dropzone').hide();
@@ -123,53 +127,19 @@ export default Component.extend({
     this.$('.file-picker__preview').append(image);
   },
 
-  /**
-   * Reads a file
-   * @param {File} file A file
-   * @param {String} readAs One of
-   *  - readAsArrayBuffer
-   *  - readAsBinaryString
-   *  - readAsDataURL
-   *  - readAsText
-   * @return {Promise}
-   */
-  readFile: function(file, readAs) {
-    const reader = new FileReader();
+  updateProgress: function(event) {
+    const {
+      loaded,
+      total
+    } = event;
 
-    assert(
-      'readAs method "' + readAs + '" not implemented', (reader[readAs] && readAs !== 'abort')
-    );
+    let value = null;
 
-    return new Ember.RSVP.Promise((resolve, reject) => {
-      reader.onload = function(event) {
-        resolve({
-          // TODO rename to file / breaking change
-          filename: file.name,
-          type: file.type,
-          data: event.target.result,
-          size: file.size
-        });
-      };
+    if (!isEmpty(loaded) && !isEmpty(total) && parseFloat(total) !== 0) {
+      value = loaded / total * 100;
+    }
 
-      reader.onabort = function() {
-        reject({
-          event: 'onabort'
-        });
-      };
-
-      reader.onerror = function(error) {
-        reject({
-          event: 'onerror',
-          error: error
-        });
-      };
-
-      reader.onprogress = (event) => {
-        this.set('progressValue', event.loaded / event.total * 100);
-      };
-
-      reader[readAs](file);
-    });
+    this.set('progressValue', value);
   },
 
   hideInput: function() {
@@ -181,7 +151,7 @@ export default Component.extend({
   },
 
   hideProgress: function() {
-    this.$('.file-picker__progress').hide();
+    this.set('showProgress', false);
   },
 
   clearPreview: function() {
@@ -213,11 +183,18 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     event.dataTransfer.dropEffect = 'copy';
   },
   drop: function(event) {
     if (event.preventDefault) {
       event.preventDefault();
+    }
+    if (!this.get('dropzone')) {
+      return;
     }
 
     this.handleFiles(event.dataTransfer.files);
@@ -228,6 +205,10 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     if (!this.get('multiple')) {
       this.clearPreview();
     }
@@ -240,9 +221,26 @@ export default Component.extend({
     if (event.preventDefault) {
       event.preventDefault();
     }
+    if (!this.get('dropzone')) {
+      return;
+    }
+
     var count = this.decrementProperty('count');
     if (count === 0) {
       this.$().removeClass('over');
     }
-  }
+  },
+
+  /*
+   * returns true if browser supportes progress element
+   *
+   * browser support overview:
+   * http://caniuse.com/#feat=progress
+   *
+   * uses test from Modernizr
+   * https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem/progress-meter.js
+   */
+  isProgressSupported: Ember.computed(function() {
+    return document.createElement('progress').max !== undefined;
+  })
 });

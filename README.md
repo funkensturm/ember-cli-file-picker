@@ -71,7 +71,8 @@ export default Ember.ObjectController.extend({
 			// readAs="readAsFile"
 			console.log(file.name, file.type, file.size);
 			// readAs="readAsArrayBuffer|readAsBinaryString|readAsDataURL|readAsText"
-			console.log(file.filename, file.type, file.data, file.size);
+			console.log(file.name, file.type, file.data, file.size);
+			// There is also file.filename for backward compatibility
 		}
 	}
 });
@@ -116,6 +117,42 @@ The addon provides the following classes to style the file-picker:
   * `.file-picker__dropzone`
   * `.file-picker__input`
 
+## Test helpers
+ember-cli-file-picker exports a test helper for acceptance tests.
+
+```js
+// tests/helpers/start-app.js
+import './ember-cli-file-picker';
+
+// tests/.jshintrc
+{
+  "predef": [
+    "uploadFile"
+  ]
+}
+
+// tests/acceptance/file-upload.js
+import { test } from 'qunit';
+import moduleForAcceptance from '../helpers/module-for-acceptance';
+
+moduleForAcceptance('Acceptance | file upload');
+
+test('visiting /file-upload', function(assert) {
+  visit('/file-upload');
+
+  // content is passed to [Blob() constructor](https://developer.mozilla.org/de/docs/Web/API/Blob/Blob)
+  const content = [
+    '"var";"value"\n',
+    '"foo";"10"\n',
+    '"bar";"20"'
+  ];
+  const filename = 'example.csv';
+  const lastModifiedDate = new Date();
+
+  // all arguments are optional
+  uploadFile(content, filename, lastModifiedDate);
+});
+```
 
 ## Use with CarrierWave
 
@@ -190,7 +227,7 @@ class PostsController < ApplicationController
 		temp_img_file.rewind
 
 		ActionDispatch::Http::UploadedFile.new({
-		  filename: image[:filename],
+		  filename: image[:name],
 		  type: image[:type],
 		  tempfile: temp_img_file
 		})
