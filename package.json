@@ -41,7 +41,7 @@
     "loader.js": "^4.0.1"
   },
   "dependencies": {
-    "ember-cli-babel": "^5.1.6"
+    "ember-cli-babel": "^5.1.9"
   },
   "keywords": [
     "ember-addon",
