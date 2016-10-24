@@ -96,6 +96,8 @@ export default Component.extend({
           });
       }
     }
+
+    this.$('.file-picker__input').val(null);
   },
 
   /**

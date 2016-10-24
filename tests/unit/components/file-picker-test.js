@@ -80,14 +80,14 @@ test('it hides file input', function(assert) {
   assert.equal(component.$('input:hidden').length, 1);
 });
 
-test('it shows file input', function(assert) {
+test('it clears the file name', function(assert) {
   assert.expect(1);
 
-  const component = this.subject({
-    hideFileInput: false
-  });
-
+  const component = this.subject();
+  component.$('.file-picker__input').val('testfilename');
   this.render();
 
-  assert.equal(component.$('input:hidden').length, 0);
+  assert.equal(component.$('.file-picker__input').val(), null);
 });
+
+
