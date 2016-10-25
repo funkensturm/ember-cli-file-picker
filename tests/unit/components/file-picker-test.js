@@ -91,5 +91,3 @@ test('it shows file input', function(assert) {
 
   assert.equal(component.$('input:hidden').length, 0);
 });
-
-
