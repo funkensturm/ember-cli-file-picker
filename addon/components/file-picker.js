@@ -96,6 +96,10 @@ export default Component.extend({
           });
       }
     }
+
+    if (!this.get('hideFileInput')) {
+      this.$('.file-picker__input').val(null);
+    }
   },
 
   /**
