@@ -97,7 +97,10 @@ export default Component.extend({
       }
     }
 
-    this.$('.file-picker__input').val(null);
+    var file_picker_input = this.$('.file-picker__input');
+    if (file_picker_input) {
+      file_picker_input.val(null);
+    }
   },
 
   /**
