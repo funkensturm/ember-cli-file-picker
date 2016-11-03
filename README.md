@@ -16,6 +16,9 @@ It supports:
 
 ## Changelog
 
+### 0.0.10
+* [BUGFIX] Set input to null after select to fix webkit caching. [@nicford-gojimo](https://github.com/nicford-gojimo)
+
 ### 0.0.9
 * [BUGFIX] Restore preview after selecting 'cancel' from the browser file dialog. [@quiaro](https://github.com/quiaro)
 
