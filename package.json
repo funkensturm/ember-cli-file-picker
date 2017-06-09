@@ -1,47 +1,7 @@
 {
   "name": "ember-cli-file-picker",
   "description": "An addon for ember-cli that provides a component to easily add a filepicker to your ember-cli app.",
-  "version": "0.1.0",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
-  "scripts": {
-    "build": "ember build",
-    "start": "ember server",
-    "test": "ember try:each"
-  },
-  "repository": "https://github.com/funkensturm/ember-cli-file-picker.git",
-  "engines": {
-    "node": ">= 4"
-  },
-  "author": "Manuel Wiedenmann",
-  "license": "MIT",
-  "devDependencies": {
-    "broccoli-asset-rev": "^2.4.5",
-    "ember-ajax": "^3.0.0",
-    "ember-cli": "2.13.2",
-    "ember-cli-dependency-checker": "^1.3.0",
-    "ember-cli-eslint": "^3.0.0",
-    "ember-cli-htmlbars": "^1.1.1",
-    "ember-cli-htmlbars-inline-precompile": "^0.4.0",
-    "ember-cli-inject-live-reload": "^1.4.1",
-    "ember-cli-qunit": "^4.0.0",
-    "ember-cli-release": "^0.2.9",
-    "ember-cli-shims": "^1.1.0",
-    "ember-cli-sri": "^2.1.0",
-    "ember-cli-uglify": "^1.2.0",
-    "ember-disable-prototype-extensions": "^1.1.0",
-    "ember-export-application-global": "^2.0.0",
-    "ember-load-initializers": "^1.0.0",
-    "ember-resolver": "^4.0.0",
-    "ember-source": "~2.13.0",
-    "ember-truth-helpers": "1.2.0",
-    "loader.js": "^4.2.3"
-  },
-  "dependencies": {
-    "ember-cli-babel": "^6.0.0"
-  },
+  "version": "0.0.10",
   "keywords": [
     "ember-addon",
     "file-picker",
@@ -50,6 +10,46 @@
     "upload",
     "dropzone"
   ],
+  "license": "MIT",
+  "author": "Manuel Wiedenmann",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "repository": "https://github.com/funkensturm/ember-cli-file-picker.git",
+  "scripts": {
+    "build": "ember build",
+    "start": "ember server",
+    "test": "ember try:each"
+  },
+  "dependencies": {
+    "ember-cli-babel": "^6.1.0"
+  },
+  "devDependencies": {
+    "broccoli-asset-rev": "^2.4.5",
+    "ember-cli": "2.13.2",
+    "ember-cli-dependency-checker": "^1.4.0",
+    "ember-cli-eslint": "^3.0.0",
+    "ember-cli-htmlbars": "^1.3.0",
+    "ember-cli-htmlbars-inline-precompile": "^0.4.2",
+    "ember-cli-inject-live-reload": "^1.6.1",
+    "ember-cli-qunit": "^4.0.0",
+    "ember-cli-release": "^0.2.9",
+    "ember-cli-sass": "6.1.3",
+    "ember-cli-shims": "^1.1.0",
+    "ember-cli-sri": "^2.1.0",
+    "ember-cli-uglify": "^1.2.0",
+    "ember-disable-prototype-extensions": "^1.1.0",
+    "ember-export-application-global": "^2.0.0",
+    "ember-load-initializers": "^1.0.0",
+    "ember-resolver": "^4.0.0",
+    "ember-source": "~2.13.0",
+    "ember-truth-helpers": "1.3.0",
+    "loader.js": "^4.4.0"
+  },
+  "engines": {
+    "node": ">= 4"
+  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
   }
