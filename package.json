@@ -1,22 +1,30 @@
 {
   "name": "ember-cli-file-picker",
   "description": "An addon for ember-cli that provides a component to easily add a filepicker to your ember-cli app.",
-  "version": "0.1.0",
+  "version": "0.0.10",
+  "keywords": [
+    "ember-addon",
+    "file-picker",
+    "filepicker",
+    "file",
+    "upload",
+    "dropzone"
+  ],
+  "license": "MIT",
+  "author": "Manuel Wiedenmann",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
+  "repository": "https://github.com/funkensturm/ember-cli-file-picker.git",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
     "test": "ember try:each"
   },
-  "repository": "https://github.com/funkensturm/ember-cli-file-picker.git",
-  "engines": {
-    "node": ">= 4"
+  "dependencies": {
+    "ember-cli-babel": "^6.0.0"
   },
-  "author": "Manuel Wiedenmann",
-  "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^3.0.0",
@@ -39,17 +47,9 @@
     "ember-truth-helpers": "1.2.0",
     "loader.js": "^4.2.3"
   },
-  "dependencies": {
-    "ember-cli-babel": "^6.0.0"
+  "engines": {
+    "node": ">= 4"
   },
-  "keywords": [
-    "ember-addon",
-    "file-picker",
-    "filepicker",
-    "file",
-    "upload",
-    "dropzone"
-  ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
   }
