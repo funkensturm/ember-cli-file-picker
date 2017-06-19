@@ -91,3 +91,21 @@ test('it shows file input', function(assert) {
 
   assert.equal(component.$('input:hidden').length, 0);
 });
+
+test('it rejects improper filetypes', function(assert) {
+  assert.expect(2);
+
+  const component = this.subject({
+    accept: '.jpg,.jpeg',
+    multiple: true
+  });
+
+  const files = [
+    { filename: 'goodfile.jpg' },
+    { filename: 'good_file.jpeg' },
+    { filename: 'badfile.html' }
+  ];
+
+  assert.strictEqual(component._invalidExtension(files), true);
+  assert.strictEqual(component._invalidExtension(files.slice(0, 2)), false);
+});
