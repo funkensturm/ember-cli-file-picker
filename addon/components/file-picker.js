@@ -51,6 +51,12 @@ export default Component.extend({
     this.$('.file-picker__input').on(
       'change', bind(this, 'filesSelected')
     );
+
+    // reset the input's value to trigger the `onchange` event in the case that the
+    // same file path is selected.
+    document.querySelector('.file-picker__input').addEventListener('click', (e) => {
+      e.target.value = '';
+    });
   },
 
   willDestroyElement: function() {
@@ -95,10 +101,6 @@ export default Component.extend({
             this.sendAction('fileLoaded', file);
           });
       }
-    }
-
-    if (!this.get('hideFileInput')) {
-      this.$('.file-picker__input').val(null);
     }
   },
 
