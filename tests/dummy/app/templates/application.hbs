@@ -6,7 +6,7 @@
   {{/each}}
 </select>
 
-{{#file-picker fileLoaded="fileLoaded" readAs=readAs}}
+{{#file-picker fileLoaded=(action "fileLoaded") readAs=readAs}}
     Drag here or click to upload a file
 {{/file-picker}}
 
