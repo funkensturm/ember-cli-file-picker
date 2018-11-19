@@ -38,7 +38,7 @@ It supports:
 ## Usage
 
 ```handlebars
-{{#file-picker fileLoaded="fileLoaded"}}
+{{#file-picker fileLoaded=(action "fileLoaded")}}
 	Drag here or click to upload a file
 {{/file-picker}}
 ```
@@ -192,7 +192,7 @@ export default DS.Transform.extend({
 
 {{#file-picker
   accept=".jpg,.jpeg,.gif,.png"
-  fileLoaded="fileLoaded"
+  fileLoaded=(action "fileLoaded")
   readAs="readAsDataURL"
 }}
 ```
