@@ -123,6 +123,11 @@ export default Component.extend({
   },
 
   addPreviewImage: function(file) {
+    // called by readFile callback, so we could have been destroyed
+    if (this.isDestroyed || this.isDestroying) {
+      return;
+    }
+
     var image = this.$(
       '<img src="' + file.data + '" class="file-picker__preview__image ' +
       (this.get('multiple') ? 'multiple' : 'single') + '">');
@@ -132,6 +137,10 @@ export default Component.extend({
   },
 
   updateProgress: function(event) {
+    // called by readFile callback, so we could have been destroyed
+    if (this.isDestroyed || this.isDestroying) {
+      return;
+    }
     const {
       loaded,
       total
